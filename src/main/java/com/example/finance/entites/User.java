@@ -14,12 +14,21 @@ public class User{
     private String passwordToken;
     private String email;
     private String password;
-    private String ville ;
+    private String ville;
     private Long num_tel;
-
-
     private Date date_naiss;
-    private  String reset_password;
+
+
+private String photoUrl;
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -37,22 +46,20 @@ public class User{
     }
 
 
-
-    public User(Long cin, String nom, String prenom, String email, String password, String ville, Long num_tel, String passwordToken, Date date_naiss, String reset_password, List<Investment> investments, List<Credit> credits) {
+    public User(Long cin, String nom, String prenom, String passwordToken, String email, String password, String ville, Long num_tel, Date date_naiss, String reset_password, String photoUrl, List<Investment> investments, List<Credit> credits) {
         this.cin = cin;
         this.nom = nom;
         this.prenom = prenom;
+        this.passwordToken = passwordToken;
         this.email = email;
         this.password = password;
         this.ville = ville;
         this.num_tel = num_tel;
-        this.passwordToken = passwordToken;
         this.date_naiss = date_naiss;
-        this.reset_password = reset_password;
+        this.photoUrl = photoUrl;
         this.investments = investments;
         this.credits = credits;
     }
-
 
     public String getPasswordToken() {
         return passwordToken;
@@ -61,15 +68,6 @@ public class User{
     public void setPasswordToken(String passwordToken) {
         this.passwordToken = passwordToken;
     }
-
-    public String getReset_password() {
-        return reset_password;
-    }
-
-    public void setReset_password(String reset_password) {
-        this.reset_password = reset_password;
-    }
-
 
 
     @OneToMany(mappedBy = "user")
@@ -146,5 +144,8 @@ public class User{
 
     public User() {
     }
+
+
+
     // Getters and setters
 }

@@ -60,23 +60,34 @@ public class ForgotPasswordController {
         return "forgot_password";
     }
 
-
     private void sendEmail(String email, String resetPasswordLink) throws MessagingException, UnsupportedEncodingException{
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-       helper.setFrom("rabhisouma89@gmail.com", "Shopme Support");
+
+        helper.setFrom("rabhisouma89@gmail.com", "Finance App");
       helper.setTo(email);
-      String subject = "Here's the link to reset your password";
-        String content = "<p>Hello,</p>"
+        String subject = "Here's the link to reset your password";
+        String content = "<html><head><style>"
+                + "body { font-family: Arial, sans-serif; }"
+                + ".alert { background-color: #f2f2f2; border-left: 6px solid #2196F3; padding: 10px; margin-bottom: 10px; }"
+                + ".alert h3 { color: #2196F3; }"
+                + "p { margin-bottom: 10px; }"
+                + "a { color: #2196F3; text-decoration: none; }"
+                + "a:hover { text-decoration: underline; }"
+                + "</style></head><body>"
+                + "<div class='alert'>"
+                + "<h3>Hello,</h3>"
                 + "<p>You have requested to reset your password.</p>"
                 + "<p>Click the link below to change your password:</p>"
                 + "<p><a href=\"" + resetPasswordLink + "\">Change my password</a></p>"
                 + "<br>"
                 + "<p>Ignore this email if you do remember your password, "
-                + "or you have not made the request.</p>";
-                helper.setSubject(subject);
-                helper.setText(content,true);
-                mailSender.send(message);
+                + "or you have not made the request.</p>"
+                + "</div></body></html>";
+
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
     }
 
 
@@ -132,18 +143,22 @@ public class ForgotPasswordController {
     }
 
 
-    @PostMapping("/modifierr_password")
+    @PostMapping("/modifier_password")
     @ResponseBody
     public String modifierPassword(HttpServletRequest request, @RequestParam String token, @RequestParam String password) {
         User customer = customerService.getByResetPasswordToken(token);
         if (customer == null) {
-            return "malheureusement";
+            return "Malheureusement";
         } else {
             try {
-                return "bien modifié";
+                if (customerService.updatePassword(customer,password)) {
+                    return "Mot de passe bien modifié";
+                } else {
+                    return "Échec de la modification du mot de passe";
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                return "malheureusement";
+                return "Malheureusement";
             }
         }
     }

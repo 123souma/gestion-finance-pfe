@@ -9,7 +9,6 @@ public class Placement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String type; // Type de placement (action, obligation, fonds commun de placement, etc.)
     private String nom; // Nom du placement
     private BigDecimal montantInvesti; // Montant investi dans le placement

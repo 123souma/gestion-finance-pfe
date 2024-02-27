@@ -18,7 +18,7 @@ public class Credit {
     private Date startDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "cin")
     private User user;
 
     public Long getId() {
